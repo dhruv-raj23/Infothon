@@ -8,17 +8,17 @@ const { updateSuggestion } = require("./suggestionsController");
 // Add a new sensor
 const addSensor = async (req, res) => {
   try {
-    const { Light1, Light2, Fan, Temp, Presence } = req.body;
+    const { Light1, Fan, Intensity, Temp, Presence } = req.body;
 
     // Validate request body
-    if (Light1 === undefined || Light2 === undefined || Fan === undefined || Temp === undefined || Presence === undefined) {
+    if (Light1 === undefined || Fan === undefined || Intensity === undefined || Temp === undefined || Presence === undefined) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
     const newSensor = new Sensor({
       Light1,
-      Light2,
       Fan,
+      Intensity,
       Temp,
       Presence
     });
@@ -71,17 +71,16 @@ const processSensorData = async (req, res) => {
     }
 
     // Save sensor data
-    const newSensor = new Sensor({
+    const newSensor = {
       Light1: sensorData.Light1,
       Fan: sensorData.Fan,
       Temp: sensorData.Temp,
       Presence: sensorData.Presence
-    });
-    await newSensor.save();
+    };
 
     try {
       // Communicate with AI model
-      const aiResponse = await axios.post("http://localhost:5000/predict", newSensor);
+      const aiResponse = await axios.post("http://127.0.0.1:5000/predict", newSensor);
 
       // Handle AI suggestion
       const suggestion = aiResponse.data.suggestion || 

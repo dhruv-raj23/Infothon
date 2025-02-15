@@ -36,6 +36,9 @@ let deviceStates = {
   Fan: 0,
 };
 
+const weatherRoute = require('./routes/weatherRoute');
+app.use('/weather', weatherRoute);
+
 // Routes
 app.use('/signin', authRoutes);
 
@@ -50,6 +53,9 @@ app.get('/loginRedirect', (req, res) => {
 app.get('/', (req, res) => res.render('home'))
 app.get('/signin', (req, res) => {
   res.render('signin');
+});
+app.get('/signup', (req, res) => {
+  res.render('signup');
 });
 
 

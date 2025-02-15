@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Appliance & Renewable Suggestions</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary-dark-blue: #01161e;
+            --primary-sky-blue: #598392;
+            --hover-dark-blue: #124559;
+            --light-pastel-green: #eff6e0;
+            --pastel-green: #aec3b0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--primary-dark-blue);
+            color: var(--light-pastel-green);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            height: 50px;
+            background: var(--hover-dark-blue);
+            color: var(--light-pastel-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .main-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 95%;
+            max-width: 1240px;
+            margin: 20px auto;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+            display: flex;
+            flex-direction: column;
+            max-height: calc(100vh - 150px);
+        }
+
+        .title {
+            font-size: 1.5rem;
+            color: var(--hover-dark-blue);
+            text-align: center;
+            margin-bottom: 15px;
+            background: #ffffff;
+            padding: 5px 0;
+        }
+
+        .title i {
+            margin-left: 10px;
+            color: var(--primary-sky-blue);
+        }
+
+        .message-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+            overflow-y: auto;
+            flex: 1;
+            padding-right: 5px;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
+        .message-box::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari and Opera */
+        }
+
+        .message {
+            background: var(--pastel-green);
+            color: var(--primary-dark-blue);
+            padding: 8px 12px;
+            border-radius: 5px;
+            position: relative;
+            font-weight: 500;
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message:nth-child(odd) {
+            background: var(--pastel-green);
+            align-self: center;
+        }
+
+        .message:nth-child(even) {
+            background: var(--hover-dark-blue);
+            color: var(--light-pastel-green);
+            align-self: center;
+        }
+
+        .header {
+            background: #01161e;
+            padding: 0.8rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #eff6e0;
+        }
+
+        .header .title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #eff6e0;
+            background-color: #01161e;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            margin-bottom: 0;
+        }
+
+        .header .title i {
+            font-size: 1.4rem;
+            color: #598392;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.2rem;
+            margin: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #eff6e0;
+            font-weight: 500;
+            padding: 0.4rem 0.8rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            background: #124559;
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <header class="header">
+        <div class="title">
+            <i class="fa-solid fa-dice-d6"></i>EnergAI
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="./index.html#home">Home</a></li>
+                <li><a href="./index.html#about">About</a></li>
+                <li><a href="./index.html#feature">Features</a></li>
+                <li><a href="./index.html#services">Services</a></li>
+                <li><a href="./index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <div class="container">
+            <div class="title">AI Appliance Suggestion <i class="fa-brands fa-teamspeak"></i></div>
+            <div class="message-box" id="applianceMessageBox">
+                <!-- AI appliance suggestions will appear here -->
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="title">AI Renewable Suggestion <i class="fa-solid fa-leaf"></i></div>
+            <div class="message-box" id="renewableMessageBox">
+                <!-- AI renewable suggestions will appear here -->
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const messageBox = document.getElementById('messageBox');
+    
+            // Establish connection to SSE endpoint
+            // const eventSource = new EventSource('http://192.168.137.5:3000/api/suggestions/subscribe');
+            const eventSource = new EventSource('http://10.60.229.30:3000/api/suggestions/subscribe');
+    
+            eventSource.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+    
+                const suggestion = data.createdAt +" : " + data.suggestion || 'No suggestion available';
+    
+                console.log(suggestion);
+                // Clear previous messages
+                messageBox.innerHTML = '';
+    
+                // Display the new suggestion
+                const message = document.createElement('div');
+                message.className = 'message';
+                message.textContent = suggestion;
+    
+                messageBox.appendChild(message);
+            };
+    
+            eventSource.onerror = (error) => {
+                console.error("Error with SSE connection:", error);
+    
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'message';
+                errorMessage.style.backgroundColor = 'red';
+                errorMessage.style.color = 'white';
+                errorMessage.textContent = 'Error: Unable to receive updates from the server';
+    
+                // Clear previous messages
+                messageBox.innerHTML = '';
+                messageBox.appendChild(errorMessage);
+            };
+        });
+    </script>
+    
+    
+
+</body>
+
+</html>
+    

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Appliance Suggestion</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary-dark-blue: #01161e;
+            --primary-sky-blue: #598392;
+            --hover-dark-blue: #124559;
+            --light-pastel-green: #eff6e0;
+            --pastel-green: #aec3b0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--primary-dark-blue);
+            color: var(--light-pastel-green);
+            overflow: hidden;
+        }
+
+        .navbar {
+            height: 50px;
+            background: var(--hover-dark-blue);
+            color: var(--light-pastel-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .container {
+            position: relative;
+            width: 90%;
+            max-width: 600px;
+            margin: 80px auto 0 auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        }
+
+        .title {
+            font-size: 1.8rem;
+            color: var(--hover-dark-blue);
+            text-align: center;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            background: #ffffff;
+            padding: 10px 0;
+        }
+
+        .title i {
+            margin-left: 10px;
+            color: var(--primary-sky-blue);
+        }
+
+        .message-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .message {
+            background: var(--pastel-green);
+            color: var(--primary-dark-blue);
+            padding: 10px 15px;
+            border-radius: 5px;
+            position: relative;
+            font-weight: 500;
+            animation: stair-animation 0.5s ease-out;
+        }
+
+        .message:nth-child(odd) {
+            background: var(--light-pastel-green);
+            align-self: center;
+        }
+
+        .message:nth-child(even) {
+            background: var(--hover-dark-blue);
+            color: var(--light-pastel-green);
+            align-self: center;
+        }
+
+        @keyframes stair-animation {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: #01161e;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #eff6e0;
+        }
+
+        .header .title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #eff6e0;
+            background-color: #01161e;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .header .title i {
+            font-size: 1.6rem;
+            color: #598392;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            margin: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #eff6e0;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: #124559;
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <header class="header">
+        <div class="title">
+            <i class="fa-solid fa-dice-d6"></i>EnergAI
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="./index.html#home">Home</a></li>
+                <li><a href="./index.html#about">About</a></li>
+                <li><a href="./index.html#feature">Features</a></li>
+                <li><a href="./index.html#services">Services</a></li>
+                <li><a href="./index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="title">AI Appliance Suggestion <i class="fa-brands fa-teamspeak"></i></div>
+        <div class="message-box" id="messageBox">
+        </div>
+    </div>
+
+    <!-- <script>
+        // Function to fetch sensor data and get suggestion from ML API
+        function generateSuggestion() {
+            const messageBox = document.getElementById('messageBox');
+    
+            // Fetch the latest sensor data from your backend
+            fetch('http://localhost:3000/api/sensors/add') // Adjust the endpoint as necessary
+                .then(response => response.json())
+                .then(sensorData => {
+                    console.log('Fetched sensor data:', sensorData); // Log sensor data
+    
+                    // Send the fetched sensor data to the ML model API for suggestion
+                    fetch('http://localhost:5000/api/sensors/process', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(sensorData) // Use the actual sensor data from Raspberry Pi
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Received suggestion from AI:', data); // Log the AI response
+    
+                        const suggestion = data.suggestion || 'No suggestion available';
+    
+                        // Create a new div for the suggestion message
+                        const message = document.createElement('div');
+                        message.className = 'message';
+                        message.textContent = suggestion; // Use the suggestion from the API
+    
+                        // Append the message to the message box
+                        messageBox.appendChild(message);
+                    })
+                    .catch(error => {
+                        console.error("Error fetching suggestion:", error);
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching sensor data:", error);
+                });
+        }
+    
+        // Call the function every 2 seconds (2000ms)
+        setInterval(generateSuggestion, 2000);
+    </script> -->
+
+    <!-- <script>
+        function generateSuggestion() {
+            const messageBox = document.getElementById('messageBox');
+    
+            // CHANGE: Use process endpoint instead of direct prediction
+            fetch('http://localhost:3000/api/sensors/process', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    // If you need to send default/test data
+                    Light1: 10,
+                    Light2: 15,
+                    Fan: 20,
+                    Temp: 25,
+                    Presence: true
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Received suggestion:', data);
+    
+                // CHANGE: Use data.suggestion directly
+                const suggestion = data.suggestion || 'No suggestion available';
+    
+                const message = document.createElement('div');
+                message.className = 'message';
+                message.textContent = suggestion;
+    
+                // CHANGE: Prepend new messages
+                messageBox.insertBefore(message, messageBox.firstChild);
+    
+                // CHANGE: Limit to 10 messages
+                if (messageBox.children.length > 10) {
+                    messageBox.removeChild(messageBox.lastChild);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'message';
+                errorMessage.style.backgroundColor = 'red';
+                errorMessage.style.color = 'white';
+                errorMessage.textContent = `Error: ${error.message}`;
+                
+                messageBox.insertBefore(errorMessage, messageBox.firstChild);
+            });
+        }
+    
+        // CHANGE: Call immediately and then every 5 seconds
+        generateSuggestion();
+        setInterval(generateSuggestion, 5000);
+    </script> -->
+
+    <!-- <script>
+        let lastSuggestion = null; // Track the last suggestion
+    
+        function generateSuggestion() {
+            const messageBox = document.getElementById('messageBox');
+    
+            fetch('http://localhost:3000/api/sensors/process', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    Light1: 53453,
+                    Light2: 454,
+                    Fan: 123213,
+                    Temp: 5000,
+                    Presence: false
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Received suggestion:', data);
+    
+                const suggestion = data.suggestion || 'No suggestion available';
+    
+                // CHANGE: Only update if suggestion is different from last suggestion
+                if (suggestion !== lastSuggestion) {
+                    // Clear previous messages
+                    messageBox.innerHTML = '';
+    
+                    const message = document.createElement('div');
+                    message.className = 'message';
+                    message.textContent = suggestion;
+    
+                    // Add new suggestion
+                    messageBox.appendChild(message);
+    
+                    // Update last suggestion
+                    lastSuggestion = suggestion;
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'message';
+                errorMessage.style.backgroundColor = 'red';
+                errorMessage.style.color = 'white';
+                errorMessage.textContent = `Error: ${error.message}`;
+                
+                // Clear previous messages
+                messageBox.innerHTML = '';
+                messageBox.appendChild(errorMessage);
+            });
+        }
+    
+        // Call immediately and then every 5 seconds
+        generateSuggestion();
+        setInterval(generateSuggestion, 5000); -->
+    <!-- </script> -->
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const messageBox = document.getElementById('messageBox');
+    
+            // Establish connection to SSE endpoint
+            const eventSource = new EventSource('http://localhost:3000/api/suggestions/subscribe');
+    
+            eventSource.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+    
+                const suggestion = data.suggestion || 'No suggestion available';
+    
+                // Clear previous messages
+                messageBox.innerHTML = '';
+    
+                // Display the new suggestion
+                const message = document.createElement('div');
+                message.className = 'message';
+                message.textContent = suggestion;
+    
+                messageBox.appendChild(message);
+            };
+    
+            eventSource.onerror = (error) => {
+                console.error("Error with SSE connection:", error);
+    
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'message';
+                errorMessage.style.backgroundColor = 'red';
+                errorMessage.style.color = 'white';
+                errorMessage.textContent = 'Error: Unable to receive updates from the server';
+    
+                // Clear previous messages
+                messageBox.innerHTML = '';
+                messageBox.appendChild(errorMessage);
+            };
+        });
+    </script>
+    
+    
+
+</body>
+
+</html>
+    

@@ -1,0 +1,523 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Image Slider</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --primary-dark-blue: #01161e;
+      --primary-sky-blue: #598392;
+      --hover-dark-blue: #124559;
+      --light-pastel-green: #eff6e0; 
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #eaeaea;
+      overflow: hidden;
+    }
+
+    .container {
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1000px;
+      height: 600px;
+      overflow: hidden;
+    }
+
+    .slide {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .item {
+      flex: 0 0 100%;
+      height: 100%;
+      background-position: center;
+      background-size: cover;
+      position: relative;
+      border-radius: 20px;
+      box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+      transform: scale(0.9);
+      transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    }
+
+    .item.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .item .content {
+      position: absolute;
+      top: 50%;
+      left: 100px;
+      width: 300px;
+      color: #eee;
+      transform: translate(0, -50%);
+      font-family: system-ui;
+      opacity: 0;
+      animation: none;
+    }
+
+    .item.active .content {
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    .content .name {
+      font-size: 40px;
+      text-transform: uppercase;
+      font-weight: bold;
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out 0.5s forwards;
+    }
+
+    .content .des {
+      margin-top: 10px;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out 0.8s forwards;
+    }
+
+    .content button {
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out 1.1s forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .button {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .button button {
+      width: 40px;
+      height: 35px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      margin: 0 5px;
+      border: 1px solid #000;
+      transition: 0.3s;
+    }
+
+    .button button:hover {
+      background: #ababab;
+      color: #fff;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--primary-dark-blue);
+      padding: 1rem 2rem;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      height: 80px;
+    }
+
+    .navbar .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--light-pastel-green);
+    }
+
+    .navbar ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar ul li a {
+      text-decoration: none;
+      color: var(--light-pastel-green);
+      font-weight: 500;
+      transition: color 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .navbar ul li a:hover {
+      color: var(--primary-sky-blue);
+    }
+
+    main {
+      margin-top: 80px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="brand">
+      <i class="fa-solid fa-dice-d6"></i>EnergAI
+    </div>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/index#features">Features</a></li>
+      <li><a href="/index#services">Services</a></li>
+      <li><a href="/index#contact">Contact</a></li>
+    </ul>
+  </header> 
+
+  <div class="container">
+    <div class="slide">
+      <div class="item" style="background-image: url(https://i.ibb.co/zPQSnhh/pexels-emmet-35167-712490.jpg);">
+        <div class="content">
+          <div class="name">Appliance Automation</div>
+          <div class="des"> </div>
+          <a href="./index3final.html"><button>See More</button></a>
+        </div>
+      </div>
+      <div class="item" style="background-image: url(https://i.ibb.co/JHwyRX4/pexels-bigworldinalens-55952276-11019839.jpg);">
+        <div class="content">
+          <div class="name">Energy Statistics</div>
+          <div class="des"> </div>
+          <a href="./index1final.html"><button>See More</button></a>
+        </div>
+      </div>
+      <div class="item" style="background-image: url(https://i.ibb.co/19rfYPk/pexels-pavel-danilyuk-8294657.jpg);">
+        <div class="content">
+          <div class="name">AI Suggestion</div>
+          <div class="des"> </div>
+          <a href="/index2final.html"><button>See More</button></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="button">
+      <button class="prev" aria-label="Previous slide"><i class="fa-solid fa-arrow-left"></i></button>
+      <button class="next" aria-label="Next slide"><i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <script>
+    const next = document.querySelector('.next');
+    const prev = document.querySelector('.prev');
+    const slide = document.querySelector('.slide');
+    const items = document.querySelectorAll('.item');
+    let index = 0;
+
+    function updateSlidePosition() {
+      items.forEach((item, i) => {
+        item.classList.remove('active');
+        if (i === index) {
+          item.classList.add('active');
+        }
+      });
+      slide.style.transform = `translateX(-${index * 100}%)`;  // Fixed this line
+    }
+
+    next.addEventListener('click', () => {
+      index = (index + 1) % items.length;
+      updateSlidePosition();
+    });
+
+    prev.addEventListener('click', () => {
+      index = (index - 1 + items.length) % items.length;
+      updateSlidePosition();
+    });
+
+    items[index].classList.add('active');
+  </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Image Slider</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --primary-dark-blue: #01161e;
+      --primary-sky-blue: #598392;
+      --hover-dark-blue: #124559;
+      --light-pastel-green: #eff6e0; 
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #eaeaea;
+      overflow: hidden;
+    }
+
+    .container {
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1000px;
+      height: 600px;
+      overflow: hidden;
+    }
+
+    .slide {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .item {
+      flex: 0 0 100%;
+      height: 100%;
+      background-position: center;
+      background-size: cover;
+      position: relative;
+      border-radius: 20px;
+      box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+      transform: scale(0.9);
+      transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    }
+
+    .item.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .item .content {
+      position: absolute;
+      top: 50%;
+      left: 100px;
+      width: 300px;
+      color: #eee;
+      transform: translate(0, -50%);
+      font-family: system-ui;
+      opacity: 0;
+      animation: none;
+    }
+
+    .item.active .content {
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    .content .name {
+      font-size: 40px;
+      text-transform: uppercase;
+      font-weight: bold;
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out 0.5s forwards;
+    }
+
+    .content .des {
+      margin-top: 10px;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out 0.8s forwards;
+    }
+
+    .content button {
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out 1.1s forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .button {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .button button {
+      width: 40px;
+      height: 35px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      margin: 0 5px;
+      border: 1px solid #000;
+      transition: 0.3s;
+    }
+
+    .button button:hover {
+      background: #ababab;
+      color: #fff;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--primary-dark-blue);
+      padding: 1rem 2rem;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      height: 80px;
+    }
+
+    .navbar .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--light-pastel-green);
+    }
+
+    .navbar ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar ul li a {
+      text-decoration: none;
+      color: var(--light-pastel-green);
+      font-weight: 500;
+      transition: color 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .navbar ul li a:hover {
+      color: var(--primary-sky-blue);
+    }
+
+    main {
+      margin-top: 80px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="brand">
+      <i class="fa-solid fa-dice-d6"></i>EnergAI
+    </div>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/index#features">Features</a></li>
+      <li><a href="/index#services">Services</a></li>
+      <li><a href="/index#contact">Contact</a></li>
+    </ul>
+  </header> 
+
+  <div class="container">
+    <div class="slide">
+      <div class="item" style="background-image: url(https://i.ibb.co/zPQSnhh/pexels-emmet-35167-712490.jpg);">
+        <div class="content">
+          <div class="name">Appliance Automation</div>
+          <div class="des"> </div>
+          <a href="./index3final.html"><button type="button">See More</button></a>
+        </div>
+      </div>
+      <div class="item" style="background-image: url(https://i.ibb.co/JHwyRX4/pexels-bigworldinalens-55952276-11019839.jpg);">
+        <div class="content">
+          <div class="name">Energy Statistics</div>
+          <div class="des"> </div>
+          <a href="./index1final.html"><button type="button">See More</button></a>
+        </div>
+      </div>
+      <div class="item" style="background-image: url(https://i.ibb.co/19rfYPk/pexels-pavel-danilyuk-8294657.jpg);">
+        <div class="content">
+          <div class="name">AI Suggestion</div>
+          <div class="des"> </div>
+          <a href="./index2final.html"><button type="button">See More</button></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="button">
+      <button class="prev" aria-label="Previous slide"><i class="fa-solid fa-arrow-left"></i></button>
+      <button class="next" aria-label="Next slide"><i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <script>
+    const next = document.querySelector('.next');
+    const prev = document.querySelector('.prev');
+    const slide = document.querySelector('.slide');
+    const items = document.querySelectorAll('.item');
+    let index = 0;
+
+    function updateSlidePosition() {
+      items.forEach((item, i) => {
+        item.classList.remove('active');
+        if (i === index) {
+          item.classList.add('active');
+        }
+      });
+      slide.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    next.addEventListener('click', () => {
+      index = (index + 1) % items.length;
+      updateSlidePosition();
+    });
+
+    prev.addEventListener('click', () => {
+      index = (index - 1 + items.length) % items.length;
+      updateSlidePosition();
+    });
+
+    items[index].classList.add('active');
+  </script>
+</body>
+</html>

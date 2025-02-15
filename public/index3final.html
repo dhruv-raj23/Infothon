@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Home Control</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #222;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-top: 50px;
+    }
+
+    .device {
+      text-align: center;
+      background: #333;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .device .icon {
+      font-size: 50px;
+      margin-bottom: 15px;
+      color: #777;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .device .icon.on {
+      color: #0f0;
+      transform: scale(1.2);
+    }
+
+    .device button {
+      background: #0e1a1f;
+      border: 2px solid #fff;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .device button:hover {
+      background-color: #598392;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Smart Home Control</h1>
+  </header>
+
+  <div class="container">
+    <div class="device">
+      <div class="icon bulb" id="Light1">
+        <i class="fa-solid fa-lightbulb"></i>
+      </div>
+      <p>Bedroom Light</p>
+      <button onclick="toggleDevice('Light1')">Toggle</button>
+    </div>
+
+    <div class="device">
+      <div class="icon fan" id="Fan">
+        <i class="fa-solid fa-fan"></i>
+      </div>
+      <p>Bedroom Fan</p>
+      <button onclick="toggleDevice('Fan')">Toggle</button>
+    </div>
+
+    <div class="device">
+      <div class="icon bulb" id="Light2">
+        <i class="fa-solid fa-lightbulb"></i>
+      </div>
+      <p>Living Room Light</p>
+      <button onclick="toggleDevice('Light2')">Toggle</button>
+    </div>
+  </div>
+
+  <script>
+    // State management
+    const states = {
+      Light1: 0,
+      Light2: 0,
+      Fan: 0,
+    };
+
+    async function toggleDevice(deviceId) {
+      try {
+        // Toggle the local state of the device
+        states[deviceId] = states[deviceId] === 1 ? 0 : 1;
+
+        // Send a POST request with all states
+        const response = await fetch("/toggle", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(states),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          console.log(`Device ${deviceId} toggled successfully.`, data);
+          // Update the UI
+          document.getElementById(deviceId).classList.toggle("on", states[deviceId] === 1);
+        } else {
+          alert(`Error toggling ${deviceId}: ${data.message}`);
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
+        alert("An error occurred while toggling the device.");
+      }
+    }
+  </script>
+</body>
+</html>

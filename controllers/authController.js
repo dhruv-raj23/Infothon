@@ -13,10 +13,13 @@ exports.register = async (req, res) => {
       // Create new user
       const user = new User({ name, email, password });
       await user.save();
+
   
       // Generate token
-      const token = generateToken(user._id);
-      res.status(201).json({ message: "User registered successfully", token });
+      // const token = generateToken(user._id);
+      res.status(201)
+      .redirect('/signin')
+      // .json({ message: "User registered successfully", data: user });
     } catch (error) {
       console.error(error); // Log error for debugging
       if (error.code === 11000) {
@@ -45,8 +48,22 @@ exports.register = async (req, res) => {
       if (!user || !(await user.comparePassword(password))) {
         return res.status(401).json({ error: "Invalid credentials" });
       }
-  
-      res.redirect('/loginRedirect'); // Redirect to the loginRedirect page
+
+      const token = generateToken(user._id);
+      const options = {
+        httpOnly: true,
+        secure: true
+      }
+      res
+      .status(200)
+      .cookie("token", token, options)
+      .cookie("user", user)
+      .redirect('/loginRedirect'); // Redirect to the loginRedirect page
+      // .json({
+      //   data: user,
+      //   message: "Login Successfull",
+      //   redirect: "loginRedirect"
+      // })
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
